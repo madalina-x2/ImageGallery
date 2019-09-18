@@ -51,13 +51,21 @@ class GallerySelectionTableViewCell: UITableViewCell, UITextFieldDelegate {
         return isEditing
     }
     
+    // use textFieldShouldEndEditing() to validate input from user ?
+    
     internal func textFieldDidEndEditing(_ textField: UITextField) {
-        isEditing = false
+        endEditing()
     }
     
     internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        isEditing = false
+        endEditing()
         return true
+    }
+    
+    // MARK: - Auxiliary Methods
+    
+    private func endEditing() {
+        isEditing = false
     }
 }
 
