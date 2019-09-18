@@ -52,7 +52,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Image Galleries" id="gMT-Na-Z2V">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8uw-fQ-OmD"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8uw-fQ-OmD">
+                            <connections>
+                                <action selector="didTapAddMore:" destination="bEv-BY-UJQ" id="2qu-dw-yRN"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rj4-H6-ZV7" userLabel="First Responder" sceneMemberID="firstResponder"/>

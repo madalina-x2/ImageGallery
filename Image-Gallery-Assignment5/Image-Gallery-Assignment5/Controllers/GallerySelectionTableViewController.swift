@@ -21,12 +21,23 @@ class GallerySelectionTableViewController: UITableViewController {
         return splitViewController?.viewControllers.last?.contents as? GalleryDisplayCollectionViewController
     }
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    // MARK: - Actions
+    
+    @IBAction func didTapAddMore(_ sender: UIBarButtonItem) {
+        addNewGallery()
+        tableView.reloadData()
     }
-    */
-
+    
+    // MARK: - Class Methods
+    
+    func addNewGallery() {
+        let galleryNames = (availableGalleries + recentlyDeletedGalleries).map { gallery in
+            return gallery.title
+        }
+        let newImageGallery =  ImageGallery(
+            images: [],
+            title: "Empty".madeUnique(withRespectTo: galleryNames)
+        )
+        availableGalleries.insert(newImageGallery, at: 0)
+    }
 }
