@@ -16,6 +16,8 @@
 		C5068BC223310430001A8141 /* GallerySelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BC123310430001A8141 /* GallerySelectionTableViewController.swift */; };
 		C5068BC423310632001A8141 /* ImageGalleryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BC323310632001A8141 /* ImageGalleryHandler.swift */; };
 		C5068BC623310895001A8141 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BC523310895001A8141 /* Utilities.swift */; };
+		C5068BCA23311B99001A8141 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BC923311B99001A8141 /* ImageCollectionViewCell.swift */; };
+		C5068BCC233125C3001A8141 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BCB233125C3001A8141 /* ImageDisplayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		C5068BC123310430001A8141 /* GallerySelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GallerySelectionTableViewController.swift; sourceTree = "<group>"; };
 		C5068BC323310632001A8141 /* ImageGalleryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryHandler.swift; sourceTree = "<group>"; };
 		C5068BC523310895001A8141 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		C5068BC923311B99001A8141 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		C5068BCB233125C3001A8141 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,7 @@
 				C5068BB92330FD5B001A8141 /* Models */,
 				C5068BC0233103DF001A8141 /* Controllers */,
 				C5068BBF23310029001A8141 /* Views */,
+				C5068BAF2330FB19001A8141 /* Info.plist */,
 				C5068BB52330FB57001A8141 /* Supporting Files */,
 			);
 			path = "Image-Gallery-Assignment5";
@@ -73,7 +78,6 @@
 		C5068BB52330FB57001A8141 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C5068BAF2330FB19001A8141 /* Info.plist */,
 				C5068BA32330FB19001A8141 /* AppDelegate.swift */,
 				C5068BAA2330FB19001A8141 /* Assets.xcassets */,
 				C5068BAC2330FB19001A8141 /* LaunchScreen.storyboard */,
@@ -96,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				C5068BA72330FB19001A8141 /* Main.storyboard */,
+				C5068BC923311B99001A8141 /* ImageCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -104,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				C5068BC123310430001A8141 /* GallerySelectionTableViewController.swift */,
+				C5068BCB233125C3001A8141 /* ImageDisplayViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -182,8 +188,10 @@
 				C5068BC623310895001A8141 /* Utilities.swift in Sources */,
 				C5068BBB2330FD7F001A8141 /* ImageGallery.swift in Sources */,
 				C5068BBD2330FDFA001A8141 /* Image.swift in Sources */,
+				C5068BCA23311B99001A8141 /* ImageCollectionViewCell.swift in Sources */,
 				C5068BC223310430001A8141 /* GallerySelectionTableViewController.swift in Sources */,
 				C5068BC423310632001A8141 /* ImageGalleryHandler.swift in Sources */,
+				C5068BCC233125C3001A8141 /* ImageDisplayViewController.swift in Sources */,
 				C5068BA42330FB19001A8141 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
