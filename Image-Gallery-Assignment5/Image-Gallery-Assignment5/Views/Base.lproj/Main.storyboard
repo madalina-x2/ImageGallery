@@ -19,12 +19,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mEh-Ld-1fI">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mEh-Ld-1fI" customClass="GallerySelectionTableViewCell" customModule="Image_Gallery_Assignment5" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="52"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mEh-Ld-1fI" id="cru-ir-Ve4">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RyW-f8-3Yl">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="RyW-f8-3Yl" secondAttribute="bottom" id="H1e-20-mzV"/>
+                                        <constraint firstItem="RyW-f8-3Yl" firstAttribute="leading" secondItem="cru-ir-Ve4" secondAttribute="leading" id="Jch-Dg-Jpy"/>
+                                        <constraint firstAttribute="trailing" secondItem="RyW-f8-3Yl" secondAttribute="trailing" id="hkP-aG-TZM"/>
+                                        <constraint firstItem="RyW-f8-3Yl" firstAttribute="top" secondItem="cru-ir-Ve4" secondAttribute="top" id="qFq-WI-psh"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.85328156715117398" green="0.94168284112430045" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableViewCell>
