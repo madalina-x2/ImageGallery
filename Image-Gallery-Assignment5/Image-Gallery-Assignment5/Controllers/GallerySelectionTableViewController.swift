@@ -20,6 +20,13 @@ class GallerySelectionTableViewController: UITableViewController {
     private var detailController: GalleryDisplayCollectionViewController? {
         return splitViewController?.viewControllers.last?.contents as? GalleryDisplayCollectionViewController
     }
+    private enum Section: Int {
+        case available = 0
+        case deleted
+    }
+    private var allGalleries: [[ImageGallery]] {
+        get { return [availableGalleries, recentlyDeletedGalleries] }
+    }
     
     // MARK: - Actions
     
@@ -39,5 +46,15 @@ class GallerySelectionTableViewController: UITableViewController {
             title: "Empty".madeUnique(withRespectTo: galleryNames)
         )
         availableGalleries.insert(newImageGallery, at: 0)
+    }
+    
+    // MARK: - UITableViewDataSource Overriden Methods
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return availableGalleries.count + recentlyDeletedGalleries.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allGalleries[section].count
     }
 }
