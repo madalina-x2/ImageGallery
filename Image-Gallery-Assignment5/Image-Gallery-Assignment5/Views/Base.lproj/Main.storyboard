@@ -41,6 +41,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.85328156715117398" green="0.94168284112430045" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="galleryTitleTextField" destination="RyW-f8-3Yl" id="JcB-Nx-scv"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
