@@ -14,7 +14,15 @@ class GallerySelectionTableViewCell: UITableViewCell {
     
     internal var delegate: GallerySelectionTableViewCellDelegate?
     
-    @IBOutlet weak var galleryTitleTextField: UITextField!
+    @IBOutlet weak var galleryTitleTextField: UITextField! {
+        didSet {
+            galleryTitleTextField.addTarget(self,
+                                     action: #selector(titleDidChange(_:)),
+                                     for: .editingDidEnd)
+            galleryTitleTextField.returnKeyType = .done
+            galleryTitleTextField.delegate = self
+        }
+    }
     
     var title: String {
         set {
@@ -66,20 +74,20 @@ protocol GallerySelectionTableViewCellDelegate {
 }
 
 extension GallerySelectionTableViewCell: UITextFieldDelegate {
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        print("entered should end editing func")
-//        return true
-//    }
-//    
-//    // use textFieldShouldEndEditing() to validate input from user ?
-//    
-//    internal func textFieldDidEndEditing(_ textField: UITextField) {
-//        endEditing()
-//    }
-//    
-//    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        endEditing()
-//        return true
-//    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        print("entered should end editing func")
+        return true
+    }
+    
+    // use textFieldShouldEndEditing() to validate input from user ?
+    
+    internal func textFieldDidEndEditing(_ textField: UITextField) {
+        endEditing()
+    }
+    
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing()
+        return true
+    }
     
 }

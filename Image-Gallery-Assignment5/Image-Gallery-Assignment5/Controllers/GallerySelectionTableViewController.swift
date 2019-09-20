@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GallerySelectionTableViewController: UITableViewController {
+class GallerySelectionTableViewController: UITableViewController, GallerySelectionTableViewCellDelegate {
 
     // MARK: - Read-Only Properties
     
@@ -27,6 +27,10 @@ class GallerySelectionTableViewController: UITableViewController {
     private var allGalleries: [[ImageGallery]] {
         get { return [availableGalleries, recentlyDeletedGalleries] }
     }
+    
+    // Mark: - Outlets
+    
+    @IBOutlet weak var addGalleryButton: UIBarButtonItem!
     
     // Mark: - Overriden Methods
     
@@ -48,6 +52,7 @@ class GallerySelectionTableViewController: UITableViewController {
         if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
             if let cell = tableView.cellForRow(at: indexPath) as? GallerySelectionTableViewCell {
                 cell.isEditing = true
+                addGalleryButton.isEnabled = false
             }
         }
     }
@@ -60,9 +65,21 @@ class GallerySelectionTableViewController: UITableViewController {
         }
         let newImageGallery =  ImageGallery(
             images: [],
-            title: "Empty".madeUnique(withRespectTo: galleryNames)
+            title: "Untitled".madeUnique(withRespectTo: galleryNames)
         )
         availableGalleries.insert(newImageGallery, at: 0)
+    }
+    
+    private func getGallery(at indexPath: IndexPath) -> ImageGallery? {
+        return allGalleries[indexPath.section][indexPath.row]
+    }
+    
+    func updateGallery(_ gallery: ImageGallery) {
+        if let galleryIndex = availableGalleries.index(of: gallery) {
+            availableGalleries[galleryIndex] = gallery
+            
+            // make a notification?
+        }
     }
     
     // MARK: - UITableViewDataSource Overriden Methods
@@ -78,11 +95,25 @@ class GallerySelectionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "galleryCell",
                                                  for: indexPath)
+        let gallery = getGallery(at: indexPath)
         if let galleryCell = cell as? GallerySelectionTableViewCell {
             galleryCell.isEditing = false
-            galleryCell.galleryTitleTextField.text = allGalleries[indexPath.section][indexPath.row].title
-            galleryCell.galleryTitleTextField.delegate = galleryCell
+            galleryCell.delegate = self
+            galleryCell.title = gallery!.title
         }
         return cell
+    }
+    
+     // MARK: - Delegates
+    
+    func titleDidChange(_ title: String, in cell: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            if var gallery = getGallery(at: indexPath) {
+                gallery.title = title
+                updateGallery(gallery)
+                tableView.reloadData()
+            }
+        }
+        addGalleryButton.isEnabled = true
     }
 }

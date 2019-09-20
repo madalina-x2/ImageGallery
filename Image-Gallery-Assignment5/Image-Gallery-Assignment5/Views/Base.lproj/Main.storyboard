@@ -59,6 +59,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addGalleryButton" destination="8uw-fQ-OmD" id="pSe-5T-FMU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rj4-H6-ZV7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

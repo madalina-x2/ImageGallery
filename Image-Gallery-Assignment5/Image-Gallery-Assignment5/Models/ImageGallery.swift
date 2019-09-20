@@ -8,10 +8,18 @@
 
 import Foundation
 
-struct ImageGallery {
+struct ImageGallery: Hashable {
     
     // MARK: - Properties
     
+    let identifier: String = UUID().uuidString
     var images: [Image]
     var title: String
+    var hashValue: Int { return identifier.hashValue }
+    
+    // MARK: - Hashable
+    
+    static func ==(lhs: ImageGallery, rhs: ImageGallery) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
 }
