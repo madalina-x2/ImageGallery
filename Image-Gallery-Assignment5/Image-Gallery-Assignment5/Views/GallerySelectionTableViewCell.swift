@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GallerySelectionTableViewCell: UITableViewCell, UITextFieldDelegate {
+class GallerySelectionTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     
@@ -51,17 +51,7 @@ class GallerySelectionTableViewCell: UITableViewCell, UITextFieldDelegate {
         return isEditing
     }
     
-    // use textFieldShouldEndEditing() to validate input from user ?
-    
-    internal func textFieldDidEndEditing(_ textField: UITextField) {
-        endEditing()
-    }
-    
-    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        endEditing()
-        return true
-    }
-    
+ 
     // MARK: - Auxiliary Methods
     
     private func endEditing() {
@@ -73,4 +63,23 @@ class GallerySelectionTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 protocol GallerySelectionTableViewCellDelegate {
     func titleDidChange(_ title: String, in cell: UITableViewCell)
+}
+
+extension GallerySelectionTableViewCell: UITextFieldDelegate {
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        print("entered should end editing func")
+//        return true
+//    }
+//    
+//    // use textFieldShouldEndEditing() to validate input from user ?
+//    
+//    internal func textFieldDidEndEditing(_ textField: UITextField) {
+//        endEditing()
+//    }
+//    
+//    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        endEditing()
+//        return true
+//    }
+    
 }
