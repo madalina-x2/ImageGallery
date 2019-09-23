@@ -82,6 +82,14 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         }
     }
     
+    func deleteGallery(_ gallery: ImageGallery) {
+        if let galleryIndex = availableGalleries.index(of: gallery) {
+            recentlyDeletedGalleries.append(availableGalleries.remove(at: galleryIndex))
+        } else if let deletedGalleryIndex = recentlyDeletedGalleries.index(of: gallery) {
+            recentlyDeletedGalleries.remove(at: deletedGalleryIndex)
+        }
+    }
+    
     // MARK: - UITableViewDataSource Overriden Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -112,6 +120,18 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 { return "Recently Deleted" }
         return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            if let galleryToDelete = getGallery(at: indexPath) {
+                deleteGallery(galleryToDelete)
+                tableView.reloadData()
+            }
+            break
+        default: break
+        }
     }
     
      // MARK: - Delegates
