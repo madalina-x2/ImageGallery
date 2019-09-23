@@ -19,6 +19,7 @@
 		C5068BCC233125C3001A8141 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BCB233125C3001A8141 /* ImageDisplayViewController.swift */; };
 		C5068BD023326613001A8141 /* GalleryDisplayCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BCF23326613001A8141 /* GalleryDisplayCollectionViewController.swift */; };
 		C5068BD32332674D001A8141 /* GallerySelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BD22332674D001A8141 /* GallerySelectionTableViewCell.swift */; };
+		C5068BD52338D262001A8141 /* ImageGalleryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068BD42338D262001A8141 /* ImageGalleryHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		C5068BCB233125C3001A8141 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 		C5068BCF23326613001A8141 /* GalleryDisplayCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDisplayCollectionViewController.swift; sourceTree = "<group>"; };
 		C5068BD22332674D001A8141 /* GallerySelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GallerySelectionTableViewCell.swift; sourceTree = "<group>"; };
+		C5068BD42338D262001A8141 /* ImageGalleryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +93,9 @@
 		C5068BB92330FD5B001A8141 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C5068BBA2330FD7F001A8141 /* ImageGallery.swift */,
 				C5068BBC2330FDFA001A8141 /* Image.swift */,
+				C5068BBA2330FD7F001A8141 /* ImageGallery.swift */,
+				C5068BD42338D262001A8141 /* ImageGalleryHandler.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				C5068BD023326613001A8141 /* GalleryDisplayCollectionViewController.swift in Sources */,
 				C5068BC623310895001A8141 /* Utilities.swift in Sources */,
 				C5068BD32332674D001A8141 /* GallerySelectionTableViewCell.swift in Sources */,
+				C5068BD52338D262001A8141 /* ImageGalleryHandler.swift in Sources */,
 				C5068BBB2330FD7F001A8141 /* ImageGallery.swift in Sources */,
 				C5068BBD2330FDFA001A8141 /* Image.swift in Sources */,
 				C5068BCA23311B99001A8141 /* ImageCollectionViewCell.swift in Sources */,

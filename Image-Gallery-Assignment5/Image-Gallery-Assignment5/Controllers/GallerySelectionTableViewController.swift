@@ -9,13 +9,10 @@
 import UIKit
 
 class GallerySelectionTableViewController: UITableViewController, GallerySelectionTableViewCellDelegate {
-
-    // MARK: - Read-Only Properties
-    
-    private(set) var availableGalleries: [ImageGallery] = []
-    private(set) var recentlyDeletedGalleries: [ImageGallery] = []
     
     // MARK: - Private Properties
+    
+    private var imageGalleryHandler = ImageGalleryHandler()
     
     private var detailController: GalleryDisplayCollectionViewController? {
         return splitViewController?.viewControllers.last?.contents as? GalleryDisplayCollectionViewController
@@ -25,7 +22,9 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         case deleted
     }
     private var allGalleries: [[ImageGallery]] {
-        get { return [availableGalleries, recentlyDeletedGalleries] }
+        get {
+            return [imageGalleryHandler.availableGalleries, imageGalleryHandler.recentlyDeletedGalleries]
+        }
     }
     
     // Mark: - Outlets
@@ -33,6 +32,7 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
     @IBOutlet weak var addGalleryButton: UIBarButtonItem!
     
     // Mark: - Overriden Methods
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +41,16 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         self.tableView.addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
+    // MARK: Class Methods
+    
+    func getGallery(at indexPath: IndexPath) -> ImageGallery? {
+        return allGalleries[indexPath.section][indexPath.row]
+    }
+    
     // MARK: - Actions
     
     @IBAction func didTapAddMore(_ sender: UIBarButtonItem) {
-        addNewGallery()
+        imageGalleryHandler.addNewGallery()
         tableView.reloadData()
     }
     
@@ -54,45 +60,6 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
                 cell.isEditing = true
                 addGalleryButton.isEnabled = false
             }
-        }
-    }
-    
-    // MARK: - Class Methods
-    
-    func addNewGallery() {
-        let galleryNames = (availableGalleries + recentlyDeletedGalleries).map { gallery in
-            return gallery.title
-        }
-        let newImageGallery =  ImageGallery(
-            images: [],
-            title: "Untitled".madeUnique(withRespectTo: galleryNames)
-        )
-        availableGalleries.insert(newImageGallery, at: 0)
-    }
-    
-    private func getGallery(at indexPath: IndexPath) -> ImageGallery? {
-        return allGalleries[indexPath.section][indexPath.row]
-    }
-    
-    func updateGallery(_ gallery: ImageGallery) {
-        if let galleryIndex = availableGalleries.index(of: gallery) {
-            availableGalleries[galleryIndex] = gallery
-            
-            // make a notification?
-        }
-    }
-    
-    func deleteGallery(_ gallery: ImageGallery) {
-        if let galleryIndex = availableGalleries.index(of: gallery) {
-            recentlyDeletedGalleries.append(availableGalleries.remove(at: galleryIndex))
-        } else if let deletedGalleryIndex = recentlyDeletedGalleries.index(of: gallery) {
-            recentlyDeletedGalleries.remove(at: deletedGalleryIndex)
-        }
-    }
-    
-    func recoverGallery(_ gallery: ImageGallery) {
-        if let deletedIndex = recentlyDeletedGalleries.index(of: gallery) {
-            availableGalleries.append(recentlyDeletedGalleries.remove(at: deletedIndex))
         }
     }
     
@@ -132,7 +99,7 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         switch editingStyle {
         case .delete:
             if let galleryToDelete = getGallery(at: indexPath) {
-                deleteGallery(galleryToDelete)
+                imageGalleryHandler.deleteGallery(galleryToDelete)
                 tableView.reloadData()
             }
             break
@@ -146,7 +113,7 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
             var actions = [UIContextualAction]()
             let recoverAction = UIContextualAction(style: .normal, title: "Recover") { (action, view, _) in
                 if let deletedGallery = self.getGallery(at: indexPath) {
-                    self.recoverGallery(deletedGallery)
+                    self.imageGalleryHandler.recoverGallery(deletedGallery)
                     self.tableView.reloadData()
                 }
             }
@@ -162,7 +129,7 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         if let indexPath = tableView.indexPath(for: cell) {
             if var gallery = getGallery(at: indexPath) {
                 gallery.title = title
-                updateGallery(gallery)
+                imageGalleryHandler.updateGallery(gallery)
                 tableView.reloadData()
             }
         }

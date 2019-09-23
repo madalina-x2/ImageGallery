@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Image-Gallery-Assignment5/Controllers/GallerySelectionTableViewController.swift"
-            timestampString = "590923892.51441"
+            timestampString = "590930549.773228"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "didTapAddMore(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Image-Gallery-Assignment5/Controllers/GallerySelectionTableViewController.swift"
-            timestampString = "590923892.514835"
+            timestampString = "590930549.773895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "didTapAddMore(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Image-Gallery-Assignment5/Controllers/GallerySelectionTableViewController.swift"
+            timestampString = "590930549.774408"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Image-Gallery-Assignment5/Models/ImageGalleryHandler.swift"
+            timestampString = "590930549.774976"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "addNewGallery()"
             landmarkType = "7">
          </BreakpointContent>
@@ -41,29 +73,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Image-Gallery-Assignment5/Controllers/GallerySelectionTableViewController.swift"
-            timestampString = "590923892.515146"
+            filePath = "Image-Gallery-Assignment5/Models/ImageGalleryHandler.swift"
+            timestampString = "590930549.775033"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "didTapAddMore(_:)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "addNewGallery()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Image-Gallery-Assignment5/Controllers/GallerySelectionTableViewController.swift"
-            timestampString = "590923892.515432"
+            filePath = "Image-Gallery-Assignment5/Models/ImageGalleryHandler.swift"
+            timestampString = "590930549.77508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "addNewGallery()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

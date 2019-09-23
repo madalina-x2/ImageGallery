@@ -74,13 +74,6 @@ protocol GallerySelectionTableViewCellDelegate {
 }
 
 extension GallerySelectionTableViewCell: UITextFieldDelegate {
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        print("entered should end editing func")
-        return true
-    }
-    
-    // use textFieldShouldEndEditing() to validate input from user ?
-    
     internal func textFieldDidEndEditing(_ textField: UITextField) {
         endEditing()
     }
