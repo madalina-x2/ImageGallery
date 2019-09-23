@@ -90,6 +90,12 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         }
     }
     
+    func recoverGallery(_ gallery: ImageGallery) {
+        if let deletedIndex = recentlyDeletedGalleries.index(of: gallery) {
+            availableGalleries.append(recentlyDeletedGalleries.remove(at: deletedIndex))
+        }
+    }
+    
     // MARK: - UITableViewDataSource Overriden Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -132,6 +138,22 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
             break
         default: break
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let section = Section(rawValue: indexPath.section)
+        if section == .deleted {
+            var actions = [UIContextualAction]()
+            let recoverAction = UIContextualAction(style: .normal, title: "Recover") { (action, view, _) in
+                if let deletedGallery = self.getGallery(at: indexPath) {
+                    self.recoverGallery(deletedGallery)
+                    self.tableView.reloadData()
+                }
+            }
+            actions.append(recoverAction)
+            return UISwipeActionsConfiguration(actions: actions)
+        }
+        return nil
     }
     
      // MARK: - Delegates
