@@ -11,14 +11,6 @@ import UIKit
 private let reuseIdentifier = "imageCell"
 
 class GalleryDisplayCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate, UICollectionViewDragDelegate {
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        <#code#>
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        <#code#>
-    }
-    
 
     // MARK: - Properties
 
@@ -51,5 +43,17 @@ class GalleryDisplayCollectionViewController: UICollectionViewController, UIColl
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageGallery?.images.count ?? 0
+    }
+    
+    // MARK: - Collection View Drop Delegate
+    
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        
+    }
+    
+    // MARK: - Collection View Drag Delegate
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem]()
     }
 }

@@ -104,6 +104,16 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let section = Section(rawValue: indexPath.section)
+        return section == .available
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 { return "Recently Deleted" }
+        return nil
+    }
+    
      // MARK: - Delegates
     
     func titleDidChange(_ title: String, in cell: UITableViewCell) {
