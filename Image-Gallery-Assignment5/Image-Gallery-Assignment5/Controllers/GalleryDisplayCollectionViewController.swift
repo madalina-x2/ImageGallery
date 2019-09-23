@@ -10,7 +10,9 @@ import UIKit
 
 private let reuseIdentifier = "imageCell"
 
-class GalleryDisplayCollectionViewController: UICollectionViewController, UICollectionViewDropDelegate, UICollectionViewDragDelegate {
+class GalleryDisplayCollectionViewController: UICollectionViewController {
+    
+    
 
     // MARK: - Properties
 
@@ -44,16 +46,33 @@ class GalleryDisplayCollectionViewController: UICollectionViewController, UIColl
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageGallery?.images.count ?? 0
     }
-    
-    // MARK: - Collection View Drop Delegate
-    
+}
+
+// MARK: - CollectionView Drag Delegate Extension
+
+extension GalleryDisplayCollectionViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        // ?
+        return [UIDragItem]()
+    }
+}
+
+// MARK: - CollectionView Drop Delegate Extension
+
+extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        
+        // ?
+    }
+}
+
+// MARK: - UIDropInteraction Delegate Extension
+
+extension GalleryDisplayCollectionViewController: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: URL.self)
     }
     
-    // MARK: - Collection View Drag Delegate
-    
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return [UIDragItem]()
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .move)
     }
 }

@@ -108,8 +108,8 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a4M-PZ-ml1">
                                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="200"/>
                                         </imageView>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KRn-k7-dZb">
-                                            <rect key="frame" x="90" y="90" width="20" height="20"/>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KRn-k7-dZb">
+                                            <rect key="frame" x="-10" y="90" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                 </view>
@@ -148,8 +148,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="990.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mG-ft-mGg">
-                                <rect key="frame" x="-1" y="64" width="991" height="960"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mG-ft-mGg">
+                                <rect key="frame" x="0.0" y="64" width="989" height="960"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rev-4I-3bu">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -176,11 +176,13 @@
                             <constraint firstItem="1mG-ft-mGg" firstAttribute="height" relation="lessThanOrEqual" secondItem="0fy-VY-hXG" secondAttribute="height" priority="900" id="ePm-z5-xHu"/>
                             <constraint firstItem="1mG-ft-mGg" firstAttribute="centerY" secondItem="C2Y-kC-te2" secondAttribute="centerY" id="f16-T3-gH1"/>
                             <constraint firstItem="1mG-ft-mGg" firstAttribute="leading" secondItem="C2Y-kC-te2" secondAttribute="leading" id="q1d-m9-Rcj"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="centerX" secondItem="C2Y-kC-te2" secondAttribute="centerX" id="wfk-kp-FAb"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="trailing" secondItem="C2Y-kC-te2" secondAttribute="trailing" constant="0.5" id="zsz-2g-KGM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C2Y-kC-te2"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="rev-4I-3bu" id="iFi-97-ZQa"/>
+                        <outlet property="scrollView" destination="1mG-ft-mGg" id="vqe-65-kwf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nam-uN-sty" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
