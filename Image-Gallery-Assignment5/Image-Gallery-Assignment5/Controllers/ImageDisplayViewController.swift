@@ -21,8 +21,10 @@ class ImageDisplayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let data = image?.imageData {
-            imageView?.image = UIImage(data: data)
+        URLSession(configuration: .default).dataTask(with: image.imagePath!) { (data, response, error) in
+            if let imageData = data {
+                self.imageView?.image = UIImage(data: imageData)
+            }
         }
     }
 }

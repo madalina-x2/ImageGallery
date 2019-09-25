@@ -63,6 +63,17 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         }
     }
     
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "selectGallerySegue",
+            let navigationController = segue.destination as? UINavigationController,
+            let displayController = navigationController.visibleViewController as? GalleryDisplayCollectionViewController,
+            let imageGalleryIndex = tableView.indexPathForSelectedRow?.row {
+                displayController.imageGallery = allGalleries[0][imageGalleryIndex]
+        }
+    }
+    
     // MARK: - UITableViewDataSource Overriden Methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {

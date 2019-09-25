@@ -14,7 +14,7 @@ struct Image {
     
     var imagePath: URL?
     var aspectRatio: Double
-    var imageData: Data?
+    // var imageData: Data?
     
     /// MARK: - Initializer
     

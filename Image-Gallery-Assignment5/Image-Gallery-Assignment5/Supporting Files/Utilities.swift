@@ -139,6 +139,13 @@ extension UIImage
         UIGraphicsEndImageContext()
         return image
     }
+    
+    var aspectRatio: Double {
+        if let cgImage = self.cgImage {
+            return Double(Double(cgImage.width) / Double(cgImage.height))
+        }
+        return 1
+    }
 }
 
 extension String {

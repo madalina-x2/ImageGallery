@@ -32,6 +32,9 @@
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <segue destination="kGP-Vk-0jN" kind="showDetail" identifier="selectGallerySegue" id="ssl-oz-JRe"/>
+                                            </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>
@@ -83,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="82" y="-180"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Gallery Display Collection View Controller-->
         <scene sceneID="Krc-Ub-33J">
             <objects>
-                <collectionViewController id="Bf2-V1-RTo" sceneMemberID="viewController">
+                <collectionViewController id="Bf2-V1-RTo" customClass="GalleryDisplayCollectionViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="2eS-0W-1za">
                         <rect key="frame" x="0.0" y="0.0" width="990.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -149,7 +152,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mG-ft-mGg">
-                                <rect key="frame" x="0.0" y="64" width="989" height="960"/>
+                                <rect key="frame" x="0.0" y="64" width="990.5" height="960"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rev-4I-3bu">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -220,4 +223,7 @@
             <point key="canvasLocation" x="81.698389458272317" y="-1115.0390625"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ssl-oz-JRe"/>
+    </inferredMetricsTieBreakers>
 </document>
