@@ -55,12 +55,14 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
     }
     
     @objc func didDoubleTapToEdit(_ sender: UITapGestureRecognizer) {
-        if let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) {
-            if let cell = tableView.cellForRow(at: indexPath) as? GallerySelectionTableViewCell {
-                cell.isEditing = true
-                addGalleryButton.isEnabled = false
-            }
+        guard let indexPath = tableView.indexPathForRow(at: sender.location(in: tableView)) else {
+            fatalError("unknown index path")
         }
+        guard let cell = tableView.cellForRow(at: indexPath) as? GallerySelectionTableViewCell else {
+            fatalError("unknown cell")
+        }
+        cell.isEditing = true
+        addGalleryButton.isEnabled = false
     }
     
     // MARK: - Navigation
@@ -88,14 +90,12 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let galleryCell = tableView.dequeueReusableCell(withIdentifier: "galleryCell",
                                                               for: indexPath) as? GallerySelectionTableViewCell else {
-                                                                fatalError("nasol")
+                                                                fatalError("unknown cell")
         }
         let gallery = getGallery(at: indexPath)
-        
         galleryCell.isEditing = false
         galleryCell.delegate = self
         galleryCell.title = gallery!.title
-        
         return galleryCell
     }
     
@@ -112,10 +112,9 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            if let galleryToDelete = getGallery(at: indexPath) {
-                imageGalleryHandler.deleteGallery(galleryToDelete)
-                tableView.reloadData()
-            }
+            guard let galleryToDelete = getGallery(at: indexPath) else { fatalError("could not find gallery to delete") }
+            imageGalleryHandler.deleteGallery(galleryToDelete)
+            tableView.reloadData()
             break
         default: break
         }
@@ -126,10 +125,9 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
         if section == .deleted {
             var actions = [UIContextualAction]()
             let recoverAction = UIContextualAction(style: .normal, title: "Recover") { (action, view, _) in
-                if let deletedGallery = self.getGallery(at: indexPath) {
-                    self.imageGalleryHandler.recoverGallery(deletedGallery)
-                    self.tableView.reloadData()
-                }
+                guard let deletedGallery = self.getGallery(at: indexPath) else { fatalError("could not find gallery to recover") }
+                self.imageGalleryHandler.recoverGallery(deletedGallery)
+                self.tableView.reloadData()
             }
             actions.append(recoverAction)
             return UISwipeActionsConfiguration(actions: actions)
@@ -140,12 +138,11 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
      // MARK: - Delegates
     
     func titleDidChange(_ title: String, in cell: UITableViewCell) {
-        if let indexPath = tableView.indexPath(for: cell) {
-            if var gallery = getGallery(at: indexPath) {
-                gallery.title = title
-                imageGalleryHandler.updateGallery(gallery)
-                tableView.reloadData()
-            }
+        guard let indexPath = tableView.indexPath(for: cell) else { fatalError("unknown index path") }
+        if var gallery = getGallery(at: indexPath) {
+            gallery.title = title
+            imageGalleryHandler.updateGallery(gallery)
+            tableView.reloadData()
         }
         addGalleryButton.isEnabled = true
     }

@@ -14,6 +14,10 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
 
     // MARK: - Properties
 
+    var imageGalleryHandler: ImageGalleryHandler!
+    private lazy var itemWidth: CGFloat = { return minimumItemWidth ?? 0 }()
+    private var pinchGestureRecognizer: UIPinchGestureRecognizer!
+    private var fetcher: ImageFetcher!
     var imageGallery: ImageGallery! {
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -22,8 +26,6 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
             print("entered gallery \(String(describing: imageGallery.title))")
         }
     }
-    
-    var imageGalleryHandler: ImageGalleryHandler!
     
     private var maximumItemWidth: CGFloat? {
         return collectionView?.frame.size.width
@@ -38,10 +40,6 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
-    private lazy var itemWidth: CGFloat = { return minimumItemWidth ?? 0 }()
-    
-    private var pinchGestureRecognizer: UIPinchGestureRecognizer!
-    
     // MARK: - Lifecycle Methods
     
     override func loadView() {
@@ -52,13 +50,9 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         flowLayout?.minimumInteritemSpacing = 5
     }
     
-    var fetcher: ImageFetcher!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addInteraction(UIDropInteraction(delegate: self))
-        
         pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinchToScale))
         self.collectionView?.addGestureRecognizer(pinchGestureRecognizer)
     }
@@ -83,13 +77,11 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         
         if pinchGestureRecognizer.state == .began || pinchGestureRecognizer.state == .changed {
             let scaledWidth = itemWidth * pinchGestureRecognizer.scale
-            
             if scaledWidth <= maximumItemWidth,
                 scaledWidth >= minimumItemWidth {
                 itemWidth = scaledWidth
                 flowLayout?.invalidateLayout()
             }
-            
             pinchGestureRecognizer.scale = 1
         }
     }
@@ -112,16 +104,11 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-
         guard let galleryImage = getImage(at: indexPath) else { return cell }
-
-        if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.isLoading = true
-            guard let imageURL = galleryImage.imagePath else {
-                fatalError("no URL found")
-            }
-            imageCell.populateWithURLImage(url: imageURL)
-        } 
+        guard let imageCell = cell as? ImageCollectionViewCell else { return cell }
+        imageCell.isLoading = true
+        guard let imageURL = galleryImage.imagePath else { fatalError("no URL found") }
+        imageCell.populateWithURLImage(url: imageURL)
         return cell
     }
 }
@@ -152,15 +139,11 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDragDelegate {
     
     private func getDragItems(at indexPath: IndexPath) -> [UIDragItem] {
         var dragItems = [UIDragItem]()
-        
-        if let galleryImage = getImage(at: indexPath) {
-            if let imageURL = galleryImage.imagePath as NSURL? {
-                let urlItem = UIDragItem(itemProvider: NSItemProvider(object: imageURL))
-                urlItem.localObject = galleryImage
-                dragItems.append(urlItem)
-            }
-        }
-        
+        guard let galleryImage = getImage(at: indexPath) else { fatalError("could not locate image") }
+        guard let imageURL = galleryImage.imagePath as NSURL? else { fatalError("invalid image URL") }
+        let urlItem = UIDragItem(itemProvider: NSItemProvider(object: imageURL))
+        urlItem.localObject = galleryImage
+        dragItems.append(urlItem)
         return dragItems
     }
 }
@@ -168,17 +151,12 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDragDelegate {
 // MARK: - CollectionView Drop Delegate Extension
 
 extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
-    
     func collectionView(_ collectionView: UICollectionView,
                         dropSessionDidUpdate session: UIDropSession,
                         withDestinationIndexPath destinationIndexPath: IndexPath?
         ) -> UICollectionViewDropProposal {
-        guard imageGallery != nil else {
-            return UICollectionViewDropProposal(operation: .forbidden)
-        }
-        
+        guard imageGallery != nil else { return UICollectionViewDropProposal(operation: .forbidden) }
         let isDragFromThisApp = (session.localDragSession?.localContext as? UICollectionView) == collectionView
-        
         return UICollectionViewDropProposal(operation: isDragFromThisApp ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
     
@@ -190,39 +168,40 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
         }
     }
     
+    private func rearrangeCellsIn(_ collectionView: UICollectionView, item: UICollectionViewDropItem, sourceIndexPath: IndexPath, destinationIndexPath: IndexPath) {
+        guard let galleryImage = item.dragItem.localObject as? Image else {
+            fatalError("dropped item is not an image")
+        }
+        collectionView.performBatchUpdates({
+            self.imageGallery.images.remove(at: sourceIndexPath.item)
+            self.imageGallery.images.insert(galleryImage, at: destinationIndexPath.item)
+            collectionView.deleteItems(at: [sourceIndexPath])
+            collectionView.insertItems(at: [destinationIndexPath])
+        })
+    }
+    
+    private func receiveNewImage(from item: UICollectionViewDropItem) {
+        var draggedImage = Image(imagePath: nil, aspectRatio: 1)
+        let itemProviderCopy = item.dragItem.itemProvider.copy() as? NSItemProvider
+        _ = item.dragItem.itemProvider.loadObject(ofClass: UIImage.self){ (provider, error) in
+            guard let image = provider as? UIImage else { fatalError("invalid image") }
+            draggedImage.aspectRatio = image.aspectRatio
+            _ = itemProviderCopy?.loadObject(ofClass: URL.self) { (provider, error) in
+                guard let url = provider?.imageURL else { fatalError("invalid url") }
+                draggedImage.imagePath = url
+                self.imageGallery.images.append(draggedImage)
+                self.imageGalleryHandler.updateGallery(self.imageGallery)
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
-        
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
-                if let galleryImage = item.dragItem.localObject as? Image {
-                    collectionView.performBatchUpdates({
-                        self.imageGallery.images.remove(at: sourceIndexPath.item)
-                        self.imageGallery.images.insert(galleryImage, at: destinationIndexPath.item)
-                        collectionView.deleteItems(at: [sourceIndexPath])
-                        collectionView.insertItems(at: [destinationIndexPath])
-                    })
-                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                }
-            } else {
-                
-                var draggedImage = Image(imagePath: nil, aspectRatio: 1)
-                
-                let itemProviderCopy = item.dragItem.itemProvider.copy() as? NSItemProvider
-                _ = item.dragItem.itemProvider.loadObject(ofClass: UIImage.self){ (provider, error) in
-                    if let image = provider as? UIImage {
-                        draggedImage.aspectRatio = image.aspectRatio
-                        
-                        _ = itemProviderCopy?.loadObject(ofClass: URL.self) { (provider, error) in
-                            if let url = provider?.imageURL {
-                                draggedImage.imagePath = url
-                                self.imageGallery.images.append(draggedImage)
-                                self.imageGalleryHandler.updateGallery(self.imageGallery)
-                            }
-                        }
-                    }
-                }
-            }
+                let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+                rearrangeCellsIn(collectionView, item: item, sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath)
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+            } else { receiveNewImage(from: item) }
         }
     }
 }
@@ -242,7 +221,6 @@ extension GalleryDisplayCollectionViewController: UIDropInteractionDelegate {
         guard let item = session.items.first else { return }
         guard let droppedImage = item.localObject as? Image else { return }
         guard let index = imageGallery.images.index(of: droppedImage) else { return }
-        
         imageGallery.images.remove(at: index)
         imageGalleryHandler.updateGallery(imageGallery)
     }
