@@ -71,6 +71,7 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
             let displayController = navigationController.visibleViewController as? GalleryDisplayCollectionViewController,
             let imageGalleryIndex = tableView.indexPathForSelectedRow?.row {
                 displayController.imageGallery = allGalleries[0][imageGalleryIndex]
+            
         }
     }
     
@@ -85,15 +86,17 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "galleryCell",
-                                                 for: indexPath)
-        let gallery = getGallery(at: indexPath)
-        if let galleryCell = cell as? GallerySelectionTableViewCell {
-            galleryCell.isEditing = false
-            galleryCell.delegate = self
-            galleryCell.title = gallery!.title
+        guard let galleryCell = tableView.dequeueReusableCell(withIdentifier: "galleryCell",
+                                                              for: indexPath) as? GallerySelectionTableViewCell else {
+                                                                fatalError("nasol")
         }
-        return cell
+        let gallery = getGallery(at: indexPath)
+        
+        galleryCell.isEditing = false
+        galleryCell.delegate = self
+        galleryCell.title = gallery!.title
+        
+        return galleryCell
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

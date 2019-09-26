@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w18-j5-grU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w18-j5-grU">
     <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Image Galleries-->
         <scene sceneID="kMc-tF-ix4">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="bEv-BY-UJQ" customClass="GallerySelectionTableViewController" customModule="Image_Gallery_Assignment5" sceneMemberID="viewController">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" clearsSelectionOnViewWillAppear="NO" id="bEv-BY-UJQ" customClass="GallerySelectionTableViewController" customModule="Image_Gallery_Assignment5" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RS0-FN-jNX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,9 +31,6 @@
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
-                                            <connections>
-                                                <segue destination="kGP-Vk-0jN" kind="showDetail" identifier="selectGallerySegue" id="ssl-oz-JRe"/>
-                                            </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>
@@ -47,6 +43,7 @@
                                 <color key="backgroundColor" red="0.85328156715117398" green="0.94168284112430045" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="galleryTitleTextField" destination="RyW-f8-3Yl" id="JcB-Nx-scv"/>
+                                    <segue destination="kGP-Vk-0jN" kind="showDetail" identifier="selectGallerySegue" id="t1L-bF-OdJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -73,7 +70,7 @@
         <!--Navigation Controller-->
         <scene sceneID="EF3-aD-wsB">
             <objects>
-                <navigationController id="kGP-Vk-0jN" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kGP-Vk-0jN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Yna-mJ-Y8x">
                         <rect key="frame" x="0.0" y="20" width="990.5" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -89,9 +86,9 @@
         <!--Gallery Display Collection View Controller-->
         <scene sceneID="Krc-Ub-33J">
             <objects>
-                <collectionViewController id="Bf2-V1-RTo" customClass="GalleryDisplayCollectionViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="2eS-0W-1za">
-                        <rect key="frame" x="0.0" y="0.0" width="990.5" height="1024"/>
+                <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="Bf2-V1-RTo" customClass="GalleryDisplayCollectionViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="2eS-0W-1za">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rJF-qo-T1H">
@@ -101,18 +98,18 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="imageCell" id="frJ-TB-fm6" customClass="ImageCollectionViewCell" customModule="Image_Gallery_Assignment5">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="frJ-TB-fm6" customClass="ImageCollectionViewCell" customModule="Image_Gallery_Assignment5">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a4M-PZ-ml1">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="200"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a4M-PZ-ml1">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         </imageView>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KRn-k7-dZb">
-                                            <rect key="frame" x="-10" y="90" width="20" height="20"/>
+                                            <rect key="frame" x="90" y="90" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                 </view>
@@ -128,7 +125,7 @@
                                 <connections>
                                     <outlet property="activityIndicator" destination="KRn-k7-dZb" id="YwF-0N-eL1"/>
                                     <outlet property="imageView" destination="a4M-PZ-ml1" id="23Q-pJ-Nxu"/>
-                                    <segue destination="ExH-65-upJ" kind="show" id="yk2-a6-wGV"/>
+                                    <segue destination="ExH-65-upJ" kind="show" identifier="selectImage" id="yk2-a6-wGV"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -146,44 +143,28 @@
         <!--Image Display View Controller-->
         <scene sceneID="nVd-wJ-A2x">
             <objects>
-                <viewController id="ExH-65-upJ" customClass="ImageDisplayViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0fy-VY-hXG">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="ExH-65-upJ" customClass="ImageDisplayViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BgL-FP-P8O"/>
+                        <viewControllerLayoutGuide type="bottom" id="OXR-nc-QmK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="0fy-VY-hXG">
                         <rect key="frame" x="0.0" y="0.0" width="990.5" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mG-ft-mGg">
-                                <rect key="frame" x="0.0" y="64" width="990.5" height="960"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rev-4I-3bu">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="240" id="OzE-O3-2nf"/>
-                                            <constraint firstAttribute="height" constant="128" id="wSH-Lf-3iL"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="rev-4I-3bu" secondAttribute="bottom" id="c4W-SP-YHY"/>
-                                    <constraint firstItem="rev-4I-3bu" firstAttribute="leading" secondItem="1mG-ft-mGg" secondAttribute="leading" id="gyV-fB-3g4"/>
-                                    <constraint firstItem="rev-4I-3bu" firstAttribute="top" secondItem="1mG-ft-mGg" secondAttribute="top" id="jCv-4k-CpS"/>
-                                    <constraint firstAttribute="trailing" secondItem="rev-4I-3bu" secondAttribute="trailing" id="vlj-m9-wM6"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="64" width="1366" height="960"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="width" relation="lessThanOrEqual" secondItem="0fy-VY-hXG" secondAttribute="width" priority="900" id="3FS-ql-clx"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="centerX" secondItem="C2Y-kC-te2" secondAttribute="centerX" id="ChR-8r-1k8"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="bottom" secondItem="C2Y-kC-te2" secondAttribute="bottom" id="OTd-77-RkI"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="top" secondItem="C2Y-kC-te2" secondAttribute="top" id="Y0x-6l-rxz"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="height" relation="lessThanOrEqual" secondItem="0fy-VY-hXG" secondAttribute="height" priority="900" id="ePm-z5-xHu"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="centerY" secondItem="C2Y-kC-te2" secondAttribute="centerY" id="f16-T3-gH1"/>
-                            <constraint firstItem="1mG-ft-mGg" firstAttribute="leading" secondItem="C2Y-kC-te2" secondAttribute="leading" id="q1d-m9-Rcj"/>
+                            <constraint firstItem="1mG-ft-mGg" firstAttribute="bottom" secondItem="0fy-VY-hXG" secondAttribute="bottom" id="OTd-77-RkI"/>
+                            <constraint firstItem="1mG-ft-mGg" firstAttribute="top" secondItem="0fy-VY-hXG" secondAttribute="top" constant="64" id="Y0x-6l-rxz"/>
+                            <constraint firstItem="1mG-ft-mGg" firstAttribute="leading" secondItem="0fy-VY-hXG" secondAttribute="leading" id="q1d-m9-Rcj"/>
+                            <constraint firstItem="1mG-ft-mGg" firstAttribute="trailing" secondItem="0fy-VY-hXG" secondAttribute="trailing" id="yWX-xh-iN2"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="C2Y-kC-te2"/>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="rev-4I-3bu" id="iFi-97-ZQa"/>
                         <outlet property="scrollView" destination="1mG-ft-mGg" id="vqe-65-kwf"/>
                     </connections>
                 </viewController>
@@ -194,7 +175,7 @@
         <!--Split View Controller-->
         <scene sceneID="YKS-tc-rBh">
             <objects>
-                <splitViewController id="w18-j5-grU" sceneMemberID="viewController">
+                <splitViewController automaticallyAdjustsScrollViewInsets="NO" id="w18-j5-grU" sceneMemberID="viewController">
                     <connections>
                         <segue destination="6g9-cv-SkS" kind="relationship" relationship="masterViewController" id="WUg-el-G5T"/>
                         <segue destination="kGP-Vk-0jN" kind="relationship" relationship="detailViewController" id="pkP-fZ-nb5"/>
@@ -224,6 +205,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ssl-oz-JRe"/>
+        <segue reference="t1L-bF-OdJ"/>
     </inferredMetricsTieBreakers>
 </document>

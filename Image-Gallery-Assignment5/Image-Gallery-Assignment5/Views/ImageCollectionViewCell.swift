@@ -15,12 +15,16 @@ class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    var fetcher: ImageFetcher!
+    
     var isLoading = true {
         didSet {
             if isLoading {
+                activityIndicator.isHidden = false
                 activityIndicator.startAnimating()
             } else {
                 activityIndicator.stopAnimating()
+                activityIndicator.isHidden = true
             }
         }
     }
@@ -31,5 +35,14 @@ class ImageCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
         isLoading = true
+    }
+    
+    func populateWithURLImage(url: URL) {
+        fetcher = ImageFetcher(fetch: url) { (url, image) in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+                self.isLoading = false
+            }
+        }
     }
 }

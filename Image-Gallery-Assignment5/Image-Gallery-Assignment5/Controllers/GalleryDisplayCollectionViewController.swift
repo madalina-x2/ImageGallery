@@ -15,7 +15,12 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     // MARK: - Properties
 
     var imageGallery: ImageGallery! {
-        didSet { collectionView?.reloadData() }
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView?.reloadData()
+            }
+            print("entered gallery \(String(describing: imageGallery.title))")
+        }
     }
     
     private var maximumItemWidth: CGFloat? {
@@ -39,12 +44,23 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         collectionView!.dropDelegate = self
     }
     
+    var fetcher: ImageFetcher!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addInteraction(UIDropInteraction(delegate: self))
-        
-        print("entered gallery \(imageGallery?.title)")
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "selectImage",
+            let imageDisplayer = segue.destination as? ImageDisplayViewController,
+            let imageCell = sender as? ImageCollectionViewCell,
+            let imageIndex = collectionView?.indexPath(for: imageCell)?.row {
+            imageDisplayer.downloadImageFrom(url: imageGallery.images[imageIndex].imagePath!)
+        }
     }
     
     // MARK: - Auxiliary
@@ -59,24 +75,6 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         return imageGallery?.images.count ?? 0
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-//
-//        guard let galleryImage = getImage(at: indexPath) else { return cell }
-//
-//        if let imageCell = cell as? ImageCollectionViewCell {
-//            imageCell.isLoading = true
-//            URLSession(configuration: .default).dataTask(with: galleryImage.imagePath!) { (data, response, error) in
-//                if let imageData = data {
-//                    let currentImage = UIImage(data: imageData)
-//                    imageCell.imageView.image = currentImage
-//                    imageCell.isLoading = false
-//                }
-//            }
-//        }
-//        return cell
-//    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
 
@@ -84,15 +82,19 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
 
         if let imageCell = cell as? ImageCollectionViewCell {
             imageCell.isLoading = true
-            URLSession(configuration: .default).dataTask(with: galleryImage.imagePath!) { (data, response, error) in
-                if let imageData = data {
-                    let currentImage = UIImage(data: imageData)
-                    imageCell.imageView.image = currentImage
-                    imageCell.isLoading = false
-                }
+            guard let imageURL = galleryImage.imagePath else {
+                fatalError("no URL found")
             }
-        }
+            imageCell.populateWithURLImage(url: imageURL)
+        } 
         return cell
+    }
+}
+
+extension GalleryDisplayCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 200, height: 200 / imageGallery.images[indexPath.row].aspectRatio)
+
     }
 }
 
@@ -124,6 +126,7 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
             // item originates from this collection view
             if let sourceIndexPath = item.sourceIndexPath {
                 // rearrange items in gallery AND in view
+                
             } else {// drag&drop from outside the app
                 
                 // create a dummy image to replace the one to be dropped until it appears in the view
