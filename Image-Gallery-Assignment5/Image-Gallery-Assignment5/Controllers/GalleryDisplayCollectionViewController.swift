@@ -23,6 +23,8 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         }
     }
     
+    var imageGalleryHandler: ImageGalleryHandler!
+    
     private var maximumItemWidth: CGFloat? {
         return collectionView?.frame.size.width
     }
@@ -69,6 +71,12 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         return imageGallery?.images[indexPath.item]
     }
     
+    private func insertImage(_ image: Image, at indexPath: IndexPath) {
+        imageGallery!.images.insert(image, at: indexPath.item)
+        print("Updated \(imageGallery!.images.count)")
+        imageGalleryHandler.updateGallery(imageGallery!)
+    }
+    
     // MARK: - Collection View DataSource Methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,14 +110,45 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDelegateFlowLa
 
 extension GalleryDisplayCollectionViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        // ?
-        return [UIDragItem]()
+        session.localContext = collectionView
+        return getDragItems(at: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        return getDragItems(at: indexPath)
+    }
+    
+    private func getDragItems(at indexPath: IndexPath) -> [UIDragItem] {
+        var dragItems = [UIDragItem]()
+        
+        if let galleryImage = getImage(at: indexPath) {
+            if let imageURL = galleryImage.imagePath as NSURL? {
+                let urlItem = UIDragItem(itemProvider: NSItemProvider(object: imageURL))
+                urlItem.localObject = galleryImage
+                dragItems.append(urlItem)
+            }
+        }
+        
+        return dragItems
     }
 }
 
 // MARK: - CollectionView Drop Delegate Extension
 
 extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        dropSessionDidUpdate session: UIDropSession,
+                        withDestinationIndexPath destinationIndexPath: IndexPath?
+        ) -> UICollectionViewDropProposal {
+        guard imageGallery != nil else {
+            return UICollectionViewDropProposal(operation: .forbidden)
+        }
+        
+        let isDragFromThisApp = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+        
+        return UICollectionViewDropProposal(operation: isDragFromThisApp ? .move : .copy, intent: .insertAtDestinationIndexPath)
+    }
     
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
         if collectionView.hasActiveDrag {
@@ -126,7 +165,15 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
             // item originates from this collection view
             if let sourceIndexPath = item.sourceIndexPath {
                 // rearrange items in gallery AND in view
-                
+                if let galleryImage = item.dragItem.localObject as? Image {
+                    collectionView.performBatchUpdates({
+                        self.imageGallery.images.remove(at: sourceIndexPath.item)
+                        self.imageGallery.images.insert(galleryImage, at: destinationIndexPath.item)
+                        collectionView.deleteItems(at: [sourceIndexPath])
+                        collectionView.insertItems(at: [destinationIndexPath])
+                    })
+                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                }
             } else {// drag&drop from outside the app
                 
                 // create a dummy image to replace the one to be dropped until it appears in the view
@@ -147,8 +194,6 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                         }
                     }
                 }
-                
-
             }
         }
     }
@@ -162,6 +207,15 @@ extension GalleryDisplayCollectionViewController: UIDropInteractionDelegate {
     }
     
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        return UIDropProposal(operation: .copy)
+        return UIDropProposal(operation: .move)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        guard let item = session.items.first else { return }
+        guard let droppedImage = item.localObject as? Image else { return }
+        guard let index = imageGallery.images.index(of: droppedImage) else { return }
+        
+        imageGallery.images.remove(at: index)
+        imageGalleryHandler.updateGallery(imageGallery)
     }
 }

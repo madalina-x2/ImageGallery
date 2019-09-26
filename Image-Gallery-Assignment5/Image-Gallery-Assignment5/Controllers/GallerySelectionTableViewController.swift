@@ -71,7 +71,7 @@ class GallerySelectionTableViewController: UITableViewController, GallerySelecti
             let displayController = navigationController.visibleViewController as? GalleryDisplayCollectionViewController,
             let imageGalleryIndex = tableView.indexPathForSelectedRow?.row {
                 displayController.imageGallery = allGalleries[0][imageGalleryIndex]
-            
+                displayController.imageGalleryHandler = imageGalleryHandler
         }
     }
     

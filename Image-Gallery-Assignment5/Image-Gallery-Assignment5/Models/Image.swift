@@ -8,13 +8,14 @@
 
 import Foundation
 
-struct Image {
-    
+struct Image: Hashable {
+        
     // MARK: - Properties
     
     var imagePath: URL?
     var aspectRatio: Double
-    // var imageData: Data?
+    let identifier: String = UUID().uuidString
+    var hashValue: Int { return identifier.hashValue }
     
     /// MARK: - Initializer
     
