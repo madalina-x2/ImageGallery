@@ -217,6 +217,7 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                             if let url = provider?.imageURL {
                                 draggedImage.imagePath = url
                                 self.imageGallery.images.append(draggedImage)
+                                self.imageGalleryHandler.updateGallery(self.imageGallery)
                             }
                         }
                     }
