@@ -31,12 +31,16 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     
     private var minimumItemWidth: CGFloat? {
         guard let collectionView = collectionView else { return nil }
-        return (collectionView.frame.size.width / 3)
+        return (collectionView.frame.size.width / 3) - 5
     }
     
     private var flowLayout: UICollectionViewFlowLayout? {
         return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
+    
+    private lazy var itemWidth: CGFloat = { return minimumItemWidth ?? 0 }()
+    
+    private var pinchGestureRecognizer: UIPinchGestureRecognizer!
     
     // MARK: - Lifecycle Methods
     
@@ -44,6 +48,8 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         super.loadView()
         collectionView!.dragDelegate = self
         collectionView!.dropDelegate = self
+        flowLayout?.minimumLineSpacing = 5
+        flowLayout?.minimumInteritemSpacing = 5
     }
     
     var fetcher: ImageFetcher!
@@ -52,6 +58,9 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         view.addInteraction(UIDropInteraction(delegate: self))
+        
+        pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinchToScale))
+        self.collectionView?.addGestureRecognizer(pinchGestureRecognizer)
     }
     
     // MARK: - Navigation
@@ -66,6 +75,24 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - Auxiliary
+    
+    @objc func didPinchToScale() {
+        guard let maximumItemWidth = maximumItemWidth else { return }
+        guard let minimumItemWidth = minimumItemWidth else { return }
+        guard itemWidth <= maximumItemWidth else { return }
+        
+        if pinchGestureRecognizer.state == .began || pinchGestureRecognizer.state == .changed {
+            let scaledWidth = itemWidth * pinchGestureRecognizer.scale
+            
+            if scaledWidth <= maximumItemWidth,
+                scaledWidth >= minimumItemWidth {
+                itemWidth = scaledWidth
+                flowLayout?.invalidateLayout()
+            }
+            
+            pinchGestureRecognizer.scale = 1
+        }
+    }
     
     private func getImage(at indexPath: IndexPath) -> Image? {
         return imageGallery?.images[indexPath.item]
@@ -99,10 +126,15 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     }
 }
 
-extension GalleryDisplayCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 200 / imageGallery.images[indexPath.row].aspectRatio)
+// MARK: - CollectionView FlowLayout Delegate Extension
 
+extension GalleryDisplayCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let galleryImage = imageGallery.images[indexPath.item]
+        let itemHeight = itemWidth / CGFloat(galleryImage.aspectRatio)
+        return CGSize(width: itemWidth, height: itemHeight)
     }
 }
 
@@ -162,9 +194,7 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
         let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
         
         for item in coordinator.items {
-            // item originates from this collection view
             if let sourceIndexPath = item.sourceIndexPath {
-                // rearrange items in gallery AND in view
                 if let galleryImage = item.dragItem.localObject as? Image {
                     collectionView.performBatchUpdates({
                         self.imageGallery.images.remove(at: sourceIndexPath.item)
@@ -174,18 +204,15 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                     })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                 }
-            } else {// drag&drop from outside the app
+            } else {
                 
-                // create a dummy image to replace the one to be dropped until it appears in the view
                 var draggedImage = Image(imagePath: nil, aspectRatio: 1)
                 
-                // load actual image and get its aspect ratio
                 let itemProviderCopy = item.dragItem.itemProvider.copy() as? NSItemProvider
                 _ = item.dragItem.itemProvider.loadObject(ofClass: UIImage.self){ (provider, error) in
                     if let image = provider as? UIImage {
                         draggedImage.aspectRatio = image.aspectRatio
                         
-                        // load the URL
                         _ = itemProviderCopy?.loadObject(ofClass: URL.self) { (provider, error) in
                             if let url = provider?.imageURL {
                                 draggedImage.imagePath = url
