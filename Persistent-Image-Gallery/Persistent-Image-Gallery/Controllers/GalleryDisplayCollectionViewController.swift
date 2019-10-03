@@ -42,9 +42,19 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     
     @IBAction func didPressSave(_ sender: UIBarButtonItem) {
         if let json = imageGallery.json {
-            if let jsonString = String(data: json, encoding: .utf8) {
-                print(jsonString)
-            }
+            if let url = try? FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: true
+                ).appendingPathComponent(imageGallery.title + ".json") {
+                    do {
+                        try json.write(to: url)
+                        print("saved successfully!")
+                    } catch let error {
+                        print("couldn't print, error: \(error)")
+                    }
+                }
         }
     }
     
@@ -60,6 +70,21 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         imageGalleryHandler = ImageGalleryHandler()
         imageGalleryHandler.addNewGallery()
         imageGallery = imageGalleryHandler.availableGalleries.first!
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let url = try? FileManager.default.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        ).appendingPathComponent(imageGallery.title + ".json") {
+            if let jsonData = try? Data(contentsOf: url) {
+                imageGallery = ImageGallery(json: jsonData)
+            }
+        }
     }
     
     override func viewDidLoad() {

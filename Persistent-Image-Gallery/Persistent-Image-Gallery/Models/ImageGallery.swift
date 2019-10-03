@@ -23,4 +23,20 @@ struct ImageGallery: Hashable, Codable {
     static func ==(lhs: ImageGallery, rhs: ImageGallery) -> Bool {
         return lhs.identifier == rhs.identifier
     }
+    
+    // MARK: - Initializers
+    
+    init?(json: Data) {
+        if let newValue = try? JSONDecoder().decode(ImageGallery.self, from: json) {
+            self.images = newValue.images
+            self.title = newValue.title
+        } else {
+            return nil
+        }
+    }
+    
+    init(images: [Image], title: String) {
+        self.images = images
+        self.title = title
+    }
 }

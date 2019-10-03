@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "591797148.425295"
+            timestampString = "591801354.827129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "23"
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "591797148.425938"
+            timestampString = "591801354.8272229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "didPinchToScale()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "591797148.426201"
+            timestampString = "591801354.827289"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "getImage(at:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
