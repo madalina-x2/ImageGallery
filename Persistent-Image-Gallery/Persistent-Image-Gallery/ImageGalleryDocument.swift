@@ -1,5 +1,5 @@
 //
-//  Document.swift
+//  ImageGalleryDocument.swift
 //  Persistent-Image-Gallery
 //
 //  Created by Madalina Sinca on 02/10/2019.
@@ -9,6 +9,8 @@
 import UIKit
 
 class ImageGalleryDocument: UIDocument {
+    
+    var imageGallery: ImageGallery?
     
     override func contents(forType typeName: String) throws -> Any {
         // Encode your document with an instance of NSData or NSFileWrapper
