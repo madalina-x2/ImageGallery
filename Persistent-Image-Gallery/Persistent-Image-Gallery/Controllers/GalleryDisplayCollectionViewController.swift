@@ -12,18 +12,19 @@ private let reuseIdentifier = "imageCell"
 
 class GalleryDisplayCollectionViewController: UICollectionViewController {
     
-    
     // MARK: - Properties
     
-    var imageGalleryHandler: ImageGalleryHandler!
     private lazy var itemWidth: CGFloat = { return minimumItemWidth ?? 0 }()
     private var pinchGestureRecognizer: UIPinchGestureRecognizer!
     private var fetcher: ImageFetcher!
     var imageGallery: ImageGallery! {
         didSet {
-            print("entered gallery \(String(describing: imageGallery.title))")
+            DispatchQueue.main.async {
+                self.collectionView!.reloadData()
+            }
         }
     }
+    var imageGalleryDocument: ImageGalleryDocument?
     
     private var maximumItemWidth: CGFloat? {
         return collectionView?.frame.size.width
@@ -40,21 +41,20 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     
     // MARK: - Outlets & Actions
     
-    @IBAction func didPressSave(_ sender: UIBarButtonItem) {
-        if let json = imageGallery.json {
-            if let url = try? FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: true
-                ).appendingPathComponent(imageGallery.title + ".json") {
-                    do {
-                        try json.write(to: url)
-                        print("saved successfully!")
-                    } catch let error {
-                        print("couldn't print, error: \(error)")
-                    }
-                }
+    @IBAction func didPressSave(_ sender: UIBarButtonItem? = nil) {
+        imageGalleryDocument?.imageGallery = imageGallery
+        if imageGalleryDocument?.imageGallery != nil {
+            imageGalleryDocument?.updateChangeCount(.done)
+        }
+    }
+    
+    @IBAction func didPressDone(_ sender: UIBarButtonItem? = nil) {
+        didPressSave()
+        if imageGalleryDocument?.imageGallery != nil {
+            imageGalleryDocument?.thumbnail = view.snapshot
+        }
+        dismiss(animated: true) {
+            self.imageGalleryDocument?.close()
         }
     }
     
@@ -64,25 +64,20 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         super.loadView()
         collectionView!.dragDelegate = self
         collectionView!.dropDelegate = self
+        collectionView!.delegate = self
+        collectionView!.dataSource = self
+        collectionView!.dragInteractionEnabled = true 
         flowLayout?.minimumLineSpacing = 5
         flowLayout?.minimumInteritemSpacing = 5
-        
-        imageGalleryHandler = ImageGalleryHandler()
-        imageGalleryHandler.addNewGallery()
-        imageGallery = imageGalleryHandler.availableGalleries.first!
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let url = try? FileManager.default.url(
-            for: .documentDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: true
-        ).appendingPathComponent(imageGallery.title + ".json") {
-            if let jsonData = try? Data(contentsOf: url) {
-                imageGallery = ImageGallery(json: jsonData)
+        imageGallery = ImageGallery(images: [], title: "Untitled")
+        imageGalleryDocument?.open { success in
+            if success {
+                self.title = self.imageGalleryDocument?.localizedName
+                self.imageGallery = self.imageGalleryDocument?.imageGallery
             }
         }
     }
@@ -130,7 +125,6 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     private func insertImage(_ image: Image, at indexPath: IndexPath) {
         imageGallery!.images.insert(image, at: indexPath.item)
         print("Updated \(imageGallery!.images.count)")
-        imageGalleryHandler.updateGallery(imageGallery!)
     }
     
     // MARK: - Collection View DataSource Methods
@@ -198,19 +192,21 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                         dropSessionDidUpdate session: UIDropSession,
                         withDestinationIndexPath destinationIndexPath: IndexPath?
         ) -> UICollectionViewDropProposal {
-        guard imageGallery != nil else { return UICollectionViewDropProposal(operation: .forbidden) }
+        guard imageGallery != nil else {
+            return UICollectionViewDropProposal(operation: .forbidden)
+        }
         let isDragFromThisApp = (session.localDragSession?.localContext as? UICollectionView) == collectionView
         return UICollectionViewDropProposal(operation: isDragFromThisApp ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-        if collectionView.hasActiveDrag {
-            return session.canLoadObjects(ofClass: URL.self)
-        } else {
+//        if collectionView.hasActiveDrag {
+//            return session.canLoadObjects(ofClass: URL.self)
+//        } else {
             return session.canLoadObjects(ofClass: URL.self) && session.canLoadObjects(ofClass: UIImage.self)
-        }
+//        }
     }
-    
+
     private func rearrangeCellsIn(_ collectionView: UICollectionView, item: UICollectionViewDropItem, sourceIndexPath: IndexPath, destinationIndexPath: IndexPath) {
         guard let galleryImage = item.dragItem.localObject as? Image else {
             fatalError("dropped item is not an image")
@@ -222,7 +218,7 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
             collectionView.insertItems(at: [destinationIndexPath])
         })
     }
-    
+
     private func receiveNewImage(from item: UICollectionViewDropItem) {
         var draggedImage = Image(imagePath: nil, aspectRatio: 1)
         let itemProviderCopy = item.dragItem.itemProvider.copy() as? NSItemProvider
@@ -241,18 +237,17 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                 }
                 draggedImage.imagePath = url
                 self.imageGallery.images.append(draggedImage)
-                self.imageGalleryHandler.updateGallery(self.imageGallery)
-                
+
                 print("appended image with url: \(draggedImage.imagePath!)")
-                
-                let indexPath = IndexPath(item: self.imageGallery!.images.count - 1, section: 0)
-                DispatchQueue.main.async {
-                    self.collectionView!.insertItems(at: [indexPath])
-                }
+
+//                let indexPath = IndexPath(item: self.imageGallery!.images.count - 1, section: 0)
+//                DispatchQueue.main.async {
+//                    self.collectionView!.insertItems(at: [indexPath])
+//                }
             }
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
@@ -280,6 +275,5 @@ extension GalleryDisplayCollectionViewController: UIDropInteractionDelegate {
         guard let droppedImage = item.localObject as? Image else { return }
         guard let index = imageGallery.images.index(of: droppedImage) else { return }
         imageGallery.images.remove(at: index)
-        imageGalleryHandler.updateGallery(imageGallery)
     }
 }

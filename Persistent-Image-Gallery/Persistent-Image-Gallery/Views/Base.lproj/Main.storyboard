@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VIY-SQ-qs6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,12 +23,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2808" y="-670"/>
+            <point key="canvasLocation" x="-1124" y="-670"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ydj-Zz-8df">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VIY-SQ-qs6" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ImageGalleryEntryPoint" automaticallyAdjustsScrollViewInsets="NO" id="VIY-SQ-qs6" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="INM-yW-oCj">
                         <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -39,12 +39,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TNb-tX-T0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-359" y="-670"/>
+            <point key="canvasLocation" x="-363" y="-670"/>
         </scene>
         <!--Gallery Display Collection View Controller-->
         <scene sceneID="lOx-lH-73i">
             <objects>
-                <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="0Hr-Ay-3gf" customClass="GalleryDisplayCollectionViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController automaticallyAdjustsScrollViewInsets="NO" id="0Hr-Ay-3gf" customClass="GalleryDisplayCollectionViewController" customModule="Persistent_Image_Gallery" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="I7m-bL-Mjh">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,6 +93,12 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="d7t-NC-Hij">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="cL2-WW-wqM">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="didPressDone:" destination="0Hr-Ay-3gf" id="WZ8-Z3-AXX"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="7VR-rW-svT">
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -108,7 +114,7 @@
         <!--Image Display View Controller-->
         <scene sceneID="e51-XF-Sfb">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Zs0-IY-vm8" customClass="ImageDisplayViewController" customModule="Image_Gallery_Assignment5" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Zs0-IY-vm8" customClass="ImageDisplayViewController" customModule="Persistent_Image_Gallery" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bNP-tt-A5h"/>
                         <viewControllerLayoutGuide type="bottom" id="mie-Dn-Qz3"/>

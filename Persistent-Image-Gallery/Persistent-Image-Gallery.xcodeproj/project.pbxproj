@@ -15,7 +15,6 @@
 		C5A112FE2344A86000912921 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5A112FC2344A86000912921 /* LaunchScreen.storyboard */; };
 		C5A1130A2345FB6D00912921 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A113092345FB6D00912921 /* Image.swift */; };
 		C5A1130C2345FB8600912921 /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1130B2345FB8600912921 /* ImageGallery.swift */; };
-		C5A1130E2345FBA800912921 /* ImageGalleryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1130D2345FBA800912921 /* ImageGalleryHandler.swift */; };
 		C5A113102345FBC900912921 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1130F2345FBC900912921 /* Utilities.swift */; };
 		C5A113122345FC2A00912921 /* GalleryDisplayCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A113112345FC2A00912921 /* GalleryDisplayCollectionViewController.swift */; };
 		C5A113142345FC6E00912921 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A113132345FC6E00912921 /* ImageDisplayViewController.swift */; };
@@ -33,7 +32,6 @@
 		C5A112FF2344A86000912921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5A113092345FB6D00912921 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C5A1130B2345FB8600912921 /* ImageGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
-		C5A1130D2345FBA800912921 /* ImageGalleryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryHandler.swift; sourceTree = "<group>"; };
 		C5A1130F2345FBC900912921 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C5A113112345FC2A00912921 /* GalleryDisplayCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDisplayCollectionViewController.swift; sourceTree = "<group>"; };
 		C5A113132345FC6E00912921 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 			children = (
 				C5A113092345FB6D00912921 /* Image.swift */,
 				C5A1130B2345FB8600912921 /* ImageGallery.swift */,
-				C5A1130D2345FBA800912921 /* ImageGalleryHandler.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -194,7 +191,6 @@
 				C5A113142345FC6E00912921 /* ImageDisplayViewController.swift in Sources */,
 				C5A113122345FC2A00912921 /* GalleryDisplayCollectionViewController.swift in Sources */,
 				C5A112F62344A86000912921 /* ImageGalleryDocument.swift in Sources */,
-				C5A1130E2345FBA800912921 /* ImageGalleryHandler.swift in Sources */,
 				C5A113102345FBC900912921 /* Utilities.swift in Sources */,
 				C5A1130C2345FB8600912921 /* ImageGallery.swift in Sources */,
 				C5A113162345FCAA00912921 /* ImageCollectionViewCell.swift in Sources */,
