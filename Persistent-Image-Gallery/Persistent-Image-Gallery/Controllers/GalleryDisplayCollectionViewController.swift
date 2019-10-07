@@ -235,10 +235,10 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                         print("invalid URL: \(provider?.imageURL.absoluteString ?? "url not defined")")
                         return
                 }
-                draggedImage.imagePath = url
-                self.imageGallery.images.append(draggedImage)
-
-                print("appended image with url: \(draggedImage.imagePath!)")
+//                draggedImage.imagePath = url
+//                self.imageGallery.images.append(draggedImage)
+                self.loadImage(fromURL: url)
+                //print("appended image with url: \(draggedImage.imagePath!)")
 
 //                let indexPath = IndexPath(item: self.imageGallery!.images.count - 1, section: 0)
 //                DispatchQueue.main.async {
@@ -275,5 +275,38 @@ extension GalleryDisplayCollectionViewController: UIDropInteractionDelegate {
         guard let droppedImage = item.localObject as? Image else { return }
         guard let index = imageGallery.images.index(of: droppedImage) else { return }
         imageGallery.images.remove(at: index)
+    }
+}
+
+// MARK: - URLCache Extension
+
+extension GalleryDisplayCollectionViewController {
+    
+    public func loadImage(fromURL imageURL: URL) {
+        let cache =  URLCache.shared
+        let request = URLRequest(url: imageURL.imageURL)
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            if let data = cache.cachedResponse(for: request)?.data, let image = UIImage(data: data) {
+                
+                DispatchQueue.main.async {
+                    let imageToLoad = Image(imagePath: imageURL, aspectRatio: image.aspectRatio)
+                    self.imageGalleryDocument?.updateChangeCount(.done)
+                    self.imageGallery.images.append(imageToLoad)
+                }
+            } else {
+                URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+                    if let data = data, let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300, let image = UIImage(data: data) {
+                        let cachedData = CachedURLResponse(response: response, data: data)
+                        cache.storeCachedResponse(cachedData, for: request)
+                        DispatchQueue.main.async {
+                            let imageToLoad = Image(imagePath: imageURL, aspectRatio: image.aspectRatio)
+                            self.imageGalleryDocument?.updateChangeCount(.done)
+                            self.imageGallery.images.append(imageToLoad)
+                        }
+                    }
+                }).resume()
+            }
+        }
     }
 }
