@@ -17,7 +17,12 @@ struct Image: Hashable, Codable {
     let identifier: String = UUID().uuidString
     var hashValue: Int { return identifier.hashValue }
     
-    /// MARK: - Initializer
+    enum imageCodingKeys: String, CodingKey {
+        case imagePath = "image_path"
+        case aspectRatio = "aspect_ratio"
+    }
+    
+    //MARK: - Initializer
     
     init(imagePath: URL?, aspectRatio: Double) {
         self.imagePath = imagePath

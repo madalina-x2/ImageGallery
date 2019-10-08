@@ -10,16 +10,20 @@ import UIKit
 
 class ImageGalleryDocument: UIDocument {
     
-    var imageGallery = ImageGallery(images: [], title: "Untitled")
+    // MARK: - Public Properties
+    
+    var imageGallery: ImageGallery?
     var thumbnail: UIImage?
     
+    // MARK: - UIDocument Methods
+    
     override func contents(forType typeName: String) throws -> Any {
-        return imageGallery.json ?? Data()
+        return imageGallery?.json ?? Data()
     }
     
     override func load(fromContents contents: Any, ofType typeName: String?) throws {
         if let json = contents as? Data {
-            imageGallery = ImageGallery(json: json)!
+            imageGallery = ImageGallery(json: json)
         }
     }
     

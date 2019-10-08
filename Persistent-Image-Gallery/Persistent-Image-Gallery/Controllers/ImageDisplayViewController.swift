@@ -12,9 +12,12 @@ class ImageDisplayViewController: UIViewController {
     
     // MARK: - Properties
     
-    @IBOutlet weak var scrollView: UIScrollView!
     private var imageView = UIImageView()
     private var fetcher: ImageFetcher!
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var scrollView: UIScrollView!
     
     // MARK: - Lifecycle Methods
     
@@ -46,7 +49,6 @@ class ImageDisplayViewController: UIViewController {
             }
         }
     }
-    
 }
 
 // MARK: - ScrollView Delegate Extension

@@ -1,132 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "A2DC20DC-A834-4557-9BF3-B476017A1759"
    type = "1"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            uuid = "3273E1AE-3F54-40E2-9219-E5F9B29487A8"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.642838"
+            timestampString = "592140921.523429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "GalleryDisplayCollectionViewController"
-            landmarkType = "3">
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/Controllers/DocumentBrowserViewController.swift"
-            timestampString = "592131665.643242"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "presentDocument(at:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/Controllers/DocumentBrowserViewController.swift"
-            timestampString = "592131665.643298"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "presentDocument(at:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
+            uuid = "75AE492A-F445-4A59-B6E2-FA0C6B36C0C3"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.643348"
+            timestampString = "592140921.523563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "receiveNewImage(from:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.643594"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "collectionView(_:canHandle:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.6438479"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "dropInteraction(_:canHandle:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.644086"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "dropInteraction(_:sessionDidUpdate:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.644325"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "dropInteraction(_:performDrop:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -134,48 +41,100 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            uuid = "5D76D114-5ACE-4FDE-8E92-C6392D74A319"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/ImageGalleryDocument.swift"
-            timestampString = "592131665.6445611"
+            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
+            timestampString = "592140921.523677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "load(fromContents:ofType:)"
-            landmarkType = "7">
+            startingLineNumber = "271"
+            endingLineNumber = "271">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "FA9E13FD-DB80-4D5C-83CF-B82C37B3AF06"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
-            timestampString = "592131665.644612"
+            timestampString = "592140921.5250829"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "collectionView(_:performDropWith:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "4D9F0D62-CAAC-45D2-A50F-140A7D2F29EE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Persistent-Image-Gallery/ImageGalleryDocument.swift"
-            timestampString = "592131665.644834"
+            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
+            timestampString = "592140921.525177"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "load(fromContents:ofType:)"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "GalleryDisplayCollectionViewController"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB9FD4DA-2700-42E0-9479-BB5C332D1E31"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
+            timestampString = "592140921.5252661"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "collectionView(_:performDropWith:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DE456EFA-583F-449A-8B50-D54AFED6BA99"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
+            timestampString = "592140921.5253429"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "collectionView(_:performDropWith:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C66777C6-D507-4E8F-914F-4621E869608B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Persistent-Image-Gallery/Controllers/GalleryDisplayCollectionViewController.swift"
+            timestampString = "592140921.525418"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "collectionView(_:performDropWith:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

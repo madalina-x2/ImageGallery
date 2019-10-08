@@ -29,20 +29,32 @@ class ImageFetcher
     var backup: UIImage? { didSet { callHandlerIfNeeded() } }
     
     func fetch(_ url: URL) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            if let data = try? Data(contentsOf: url.imageURL) {
-                if self != nil {
-                    // yes, it's ok to create a UIImage off the main thread
-                    if let image = UIImage(data: data) {
-                        self?.handler(url, image)
-                    } else {
-                        self?.fetchFailed = true
-                    }
-                } else {
-                    print("ImageFetcher: fetch returned but I've left the heap -- ignoring result.")
+        loadImage(fromURL: url)
+    }
+    
+    public func loadImage(fromURL imageURL: URL){
+        let cache =  URLCache.shared
+        let request = URLRequest(url: imageURL.imageURL)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            if let data = cache.cachedResponse(for: request)?.data, let image = UIImage(data: data) {
+                print("FROM CACHE")
+                DispatchQueue.main.async {
+                    self.handler(imageURL, image)
                 }
             } else {
-                self?.fetchFailed = true
+                URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+                    if let data = data, let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300, let image = UIImage(data: data) {
+                        print("DOWNLOADED")
+                        let cachedData = CachedURLResponse(response: response, data: data)
+                        cache.storeCachedResponse(cachedData, for: request)
+                        DispatchQueue.main.async {
+                            self.handler(imageURL, image)
+                        }
+                    } else {
+                        self.fetchFailed = true
+                    }
+                }).resume()
             }
         }
     }

@@ -12,20 +12,11 @@ private let reuseIdentifier = "imageCell"
 
 class GalleryDisplayCollectionViewController: UICollectionViewController {
     
-    // MARK: - Properties
+    // MARK: - Private Properties
     
     private lazy var itemWidth: CGFloat = { return minimumItemWidth ?? 0 }()
     private var pinchGestureRecognizer: UIPinchGestureRecognizer!
     private var fetcher: ImageFetcher!
-    var imageGallery: ImageGallery! {
-        didSet {
-            DispatchQueue.main.async {
-                self.collectionView!.reloadData()
-            }
-        }
-    }
-    var imageGalleryDocument: ImageGalleryDocument?
-    
     private var maximumItemWidth: CGFloat? {
         return collectionView?.frame.size.width
     }
@@ -39,17 +30,18 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
         return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
+    // MARK: - Public Properties
+    
+    var imageGallery: ImageGallery!
+    var imageGalleryDocument: ImageGalleryDocument?
+    
     // MARK: - Outlets & Actions
     
-    @IBAction func didPressSave(_ sender: UIBarButtonItem? = nil) {
+    @IBAction func didPressDone(_ sender: UIBarButtonItem? = nil) {
         imageGalleryDocument?.imageGallery = imageGallery
         if imageGalleryDocument?.imageGallery != nil {
             imageGalleryDocument?.updateChangeCount(.done)
         }
-    }
-    
-    @IBAction func didPressDone(_ sender: UIBarButtonItem? = nil) {
-        didPressSave()
         if imageGalleryDocument?.imageGallery != nil {
             imageGalleryDocument?.thumbnail = view.snapshot
         }
@@ -60,33 +52,19 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     
     // MARK: - Lifecycle Methods
     
-    override func loadView() {
-        super.loadView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         collectionView!.dragDelegate = self
         collectionView!.dropDelegate = self
         collectionView!.delegate = self
         collectionView!.dataSource = self
-        collectionView!.dragInteractionEnabled = true 
+        collectionView!.dragInteractionEnabled = true
         flowLayout?.minimumLineSpacing = 5
         flowLayout?.minimumInteritemSpacing = 5
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        imageGallery = ImageGallery(images: [], title: "Untitled")
-        imageGalleryDocument?.open { success in
-            if success {
-                self.title = self.imageGalleryDocument?.localizedName
-                self.imageGallery = self.imageGalleryDocument?.imageGallery
-            }
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         view.addInteraction(UIDropInteraction(delegate: self))
         pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinchToScale))
         self.collectionView?.addGestureRecognizer(pinchGestureRecognizer)
+        loadImageGalleryFromDocument()
     }
     
     // MARK: - Navigation
@@ -101,6 +79,16 @@ class GalleryDisplayCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - Auxiliary
+    
+    func loadImageGalleryFromDocument() {
+        imageGalleryDocument?.open { success in
+            if success {
+                self.title = self.imageGalleryDocument?.localizedName
+                self.imageGallery = self.imageGalleryDocument?.imageGallery
+                self.collectionView?.reloadData()
+            }
+        }
+    }
     
     @objc func didPinchToScale() {
         guard let maximumItemWidth = maximumItemWidth else { return }
@@ -200,11 +188,11 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-//        if collectionView.hasActiveDrag {
-//            return session.canLoadObjects(ofClass: URL.self)
-//        } else {
+        if collectionView.hasActiveDrag {
+            return session.canLoadObjects(ofClass: URL.self)
+        } else {
             return session.canLoadObjects(ofClass: URL.self) && session.canLoadObjects(ofClass: UIImage.self)
-//        }
+        }
     }
 
     private func rearrangeCellsIn(_ collectionView: UICollectionView, item: UICollectionViewDropItem, sourceIndexPath: IndexPath, destinationIndexPath: IndexPath) {
@@ -219,7 +207,7 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
         })
     }
 
-    private func receiveNewImage(from item: UICollectionViewDropItem) {
+    private func receiveNewImage(from item: UICollectionViewDropItem, destination: IndexPath) {
         var draggedImage = Image(imagePath: nil, aspectRatio: 1)
         let itemProviderCopy = item.dragItem.itemProvider.copy() as? NSItemProvider
         _ = item.dragItem.itemProvider.loadObject(ofClass: UIImage.self){ (provider, error) in
@@ -235,15 +223,12 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                         print("invalid URL: \(provider?.imageURL.absoluteString ?? "url not defined")")
                         return
                 }
-//                draggedImage.imagePath = url
-//                self.imageGallery.images.append(draggedImage)
-                self.loadImage(fromURL: url)
-                //print("appended image with url: \(draggedImage.imagePath!)")
+                draggedImage.imagePath = url
+                self.imageGallery.images.insert(draggedImage, at: destination.item)
 
-//                let indexPath = IndexPath(item: self.imageGallery!.images.count - 1, section: 0)
-//                DispatchQueue.main.async {
-//                    self.collectionView!.insertItems(at: [indexPath])
-//                }
+                DispatchQueue.main.async {
+                    self.collectionView!.insertItems(at: [destination])
+                }
             }
         }
     }
@@ -254,7 +239,9 @@ extension GalleryDisplayCollectionViewController: UICollectionViewDropDelegate {
                 let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
                 rearrangeCellsIn(collectionView, item: item, sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath)
                 coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-            } else { receiveNewImage(from: item) }
+            } else {
+                receiveNewImage(from: item, destination: coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0))
+            }
         }
     }
 }
@@ -275,38 +262,5 @@ extension GalleryDisplayCollectionViewController: UIDropInteractionDelegate {
         guard let droppedImage = item.localObject as? Image else { return }
         guard let index = imageGallery.images.index(of: droppedImage) else { return }
         imageGallery.images.remove(at: index)
-    }
-}
-
-// MARK: - URLCache Extension
-
-extension GalleryDisplayCollectionViewController {
-    
-    public func loadImage(fromURL imageURL: URL) {
-        let cache =  URLCache.shared
-        let request = URLRequest(url: imageURL.imageURL)
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let data = cache.cachedResponse(for: request)?.data, let image = UIImage(data: data) {
-                
-                DispatchQueue.main.async {
-                    let imageToLoad = Image(imagePath: imageURL, aspectRatio: image.aspectRatio)
-                    self.imageGalleryDocument?.updateChangeCount(.done)
-                    self.imageGallery.images.append(imageToLoad)
-                }
-            } else {
-                URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-                    if let data = data, let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300, let image = UIImage(data: data) {
-                        let cachedData = CachedURLResponse(response: response, data: data)
-                        cache.storeCachedResponse(cachedData, for: request)
-                        DispatchQueue.main.async {
-                            let imageToLoad = Image(imagePath: imageURL, aspectRatio: image.aspectRatio)
-                            self.imageGalleryDocument?.updateChangeCount(.done)
-                            self.imageGallery.images.append(imageToLoad)
-                        }
-                    }
-                }).resume()
-            }
-        }
     }
 }

@@ -9,31 +9,42 @@
 import UIKit
 
 
-class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate {
+class DocumentBrowserViewController: UIDocumentBrowserViewController {
     
-    var template: URL?
+    // MARK: - Private Properties
+    
+    private var template: URL?
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        
         allowsDocumentCreation = true
         allowsPickingMultipleItems = false
         if UIDevice.current.userInterfaceIdiom == .pad {
-            template = try? FileManager.default.url(
-                for: .applicationSupportDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: true
-                ).appendingPathComponent("Untitled.json")
-            if template != nil {
-                allowsDocumentCreation = FileManager.default.createFile(atPath: template!.path, contents: Data())
-            }
+            setupForPad()
         }
     }
     
-    // MARK: UIDocumentBrowserViewControllerDelegate
+    // MARK: - Auxiliary Methods
     
+    func setupForPad() {
+        template = try? FileManager.default.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+            ).appendingPathComponent("Untitled.json")
+        if template != nil {
+            allowsDocumentCreation = FileManager.default.createFile(atPath: template!.path, contents: Data())
+        }
+    }
+}
+
+    // MARK: UIDocumentBrowserViewControllerDelegate Extension
+
+extension DocumentBrowserViewController: UIDocumentBrowserViewControllerDelegate {
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
         importHandler(template, .copy)
     }
@@ -50,7 +61,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     func documentBrowser(_ controller: UIDocumentBrowserViewController, failedToImportDocumentAt documentURL: URL, error: Error?) {
     }
     
-    // MARK: Document Presentation
+    // MARK: - Document Presentation
     
     func presentDocument(at documentURL: URL) {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)

@@ -8,28 +8,23 @@
 
 import Foundation
 
-struct ImageGallery: Hashable, Codable {
+struct ImageGallery: Codable {
     
     // MARK: - Properties
     
-    let identifier: String = UUID().uuidString
     var images: [Image]
     var title: String
-    var hashValue: Int { return identifier.hashValue }
     var json: Data? { return try? JSONEncoder().encode(self) }
-    
-    // MARK: - Hashable
-    
-    static func ==(lhs: ImageGallery, rhs: ImageGallery) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
     
     // MARK: - Initializers
     
     init?(json: Data) {
+        if json.isEmpty {
+            self =  ImageGallery(images: [], title: "Untitled")
+            return
+        }
         if let newValue = try? JSONDecoder().decode(ImageGallery.self, from: json) {
-            self.images = newValue.images
-            self.title = newValue.title
+            self = newValue
         } else {
             return nil
         }
@@ -39,4 +34,5 @@ struct ImageGallery: Hashable, Codable {
         self.images = images
         self.title = title
     }
+    
 }

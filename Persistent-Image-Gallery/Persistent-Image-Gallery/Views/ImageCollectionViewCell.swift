@@ -10,13 +10,14 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: - Outlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var fetcher: ImageFetcher!
+    // MARK: - Properties
     
+    var fetcher: ImageFetcher!
     var isLoading = true {
         didSet {
             if isLoading {
@@ -36,6 +37,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
         imageView.image = nil
         isLoading = true
     }
+    
+    // MARK: - Class Methods
     
     func populateWithURLImage(url: URL) {
         fetcher = ImageFetcher(fetch: url) { (url, image) in
