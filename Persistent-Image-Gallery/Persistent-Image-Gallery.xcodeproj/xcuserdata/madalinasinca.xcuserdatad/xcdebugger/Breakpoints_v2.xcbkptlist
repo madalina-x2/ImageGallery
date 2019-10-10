@@ -17,8 +17,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "263"
             endingLineNumber = "263"
-            landmarkName = "GalleryDisplayCollectionViewController"
-            landmarkType = "21">
+            landmarkName = "dropInteraction(_:performDrop:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -33,9 +33,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "267"
-            endingLineNumber = "267"
-            landmarkName = "dropInteraction(_:performDrop:)"
-            landmarkType = "7">
+            endingLineNumber = "267">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -66,8 +64,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "250"
             endingLineNumber = "250"
-            landmarkName = "collectionView(_:performDropWith:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -83,8 +81,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "213"
             endingLineNumber = "213"
-            landmarkName = "GalleryDisplayCollectionViewController"
-            landmarkType = "21">
+            landmarkName = "receiveNewImage(from:destination:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -100,8 +98,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "247"
             endingLineNumber = "247"
-            landmarkName = "collectionView(_:performDropWith:)"
-            landmarkType = "7">
+            landmarkName = "GalleryDisplayCollectionViewController"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -117,8 +115,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "248"
             endingLineNumber = "248"
-            landmarkName = "collectionView(_:performDropWith:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -134,8 +132,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
             endingLineNumber = "249"
-            landmarkName = "collectionView(_:performDropWith:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
